@@ -17,6 +17,7 @@ export default function PageTitle(props) {
       </Typography>
       {props.button && (
         <Button
+          onClick={props.buttonFunction}
           classes={{ root: classes.button }}
           variant="contained"
           size="large"
