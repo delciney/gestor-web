@@ -37,11 +37,11 @@ export default function Reservas() {
 
   // Tipos de notificação success, feedback
   function testeNotificacao() {
-    setMessage("Teste");
+    setMessage("Olha fabricio");
     setType("success");
     setTimeout(() => {
       setMessage("Teste");
-      setType("success");
+      setType("");
     }, 6000);
   }
 
@@ -58,7 +58,7 @@ export default function Reservas() {
       {type.length > 0 && <ToastNotification message={message} type={type} />}
 
       <Grid container spacing={4}>
-        <button style={{ display: "none" }} onClick={testeNotificacao}>
+        <button style={{ display: "block" }} onClick={testeNotificacao}>
           Teste de notificação
         </button>
         <Grid item xs={12}>
