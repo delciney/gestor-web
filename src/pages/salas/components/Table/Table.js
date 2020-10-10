@@ -26,6 +26,7 @@ export default function TableComponent({ data }) {
   keys.shift(); // delete "id" key
 
   return (
+      <div style={{ overflowX: "auto"}}>
     <Table className="mb-0">
       <TableHead>
         <TableRow>
@@ -57,5 +58,6 @@ export default function TableComponent({ data }) {
         )}
       </TableBody>
     </Table>
+    </div>
   );
 }
