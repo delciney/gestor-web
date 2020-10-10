@@ -20,7 +20,7 @@ You can start by cloning the latest version of React Dashboard on your
 local machine by running:
 
 ```shell
-$ git clone https://github.com/flatlogic/react-material-admin.git MyApp
+$ git clone https://github.com/delciney/gestor-web.git MyApp
 $ cd MyApp
 ```
 
