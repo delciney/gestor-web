@@ -1,16 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Drawer } from "@material-ui/core";
+import { Grid, Drawer, TextField, Button,
+InputAdornment  } from "@material-ui/core";
 import MUIDataTable from "mui-datatables";
 
 // components
 import PageTitle from "../../components/PageTitle";
 import ToastNotification from "../../components/ToastNotification";
 
+import useStyles from "./styles";
+
 export default function Reservas() {
-  const [reservas, setReservas] = useState([]);
-  const [message, setMessage] = useState("");
-  const [type, setType] = useState("");
-  const [openedModal, setOpenedModal] = useState(false);
+    const classes = useStyles();
+
+    const [reservas, setReservas] = useState([]);
+    const [message, setMessage] = useState("");
+    const [type, setType] = useState("");
+    const [openedModalReservas, setOpenedModalReservas] = useState(false);
+    const [dataReserva,setDataReserva ] = useState("");
+    const [dataInicio,setDataInicio ] = useState("");
+    const [dataEncerramento,setDataEncerramento ] = useState("");
+
   useEffect(() => {
     const data = [
       ["Reunião da diretoria", "Sala A", "07/10/2020", "10:30", "15:00"],
@@ -35,6 +44,15 @@ export default function Reservas() {
     console.log(params);
   }
 
+  function hendleSubmit (e){
+    e.preventDefault();
+    sendNotification("Reserva realizada com sucesso", "success");
+    setOpenedModalReservas(false);
+    setDataReserva("");
+    setDataInicio("");
+    setDataEncerramento("");
+  }
+
   function sendNotification(msg, type) {
     // type success, feedback
     setMessage(msg);
@@ -47,15 +65,16 @@ export default function Reservas() {
 
   return (
     <>
+
       <PageTitle
         title="Reservas"
         button="Nova reserva"
         buttonFunction={() => {
-          setOpenedModal(true);
+          setOpenedModalReservas(true);
         }}
       />
 
-      {type.length > 0 && <ToastNotification message={message} type={type} />}
+      {type !== "" && <ToastNotification message={message} type={type} />}
 
       <Grid container spacing={4}>
         <button style={{ display: "none" }} onClick={sendNotification}>
@@ -73,17 +92,70 @@ export default function Reservas() {
         </Grid>
       </Grid>
 
-      <Drawer
+        <Drawer
         anchor="bottom"
-        open={openedModal}
+        open={ openedModalReservas }
         onClose={() => {
-          setOpenedModal(false);
+          setOpenedModalReservas(false);
         }}
       >
-        <div>
-          
+          <form onSubmit={hendleSubmit}>
+         <div className={classes.paper}>
+        <div className={classes.mB}>
+            <TextField
+        className={classes.margin}
+        id="Data"
+        label="Data"
+        type="date"
+        value={dataReserva}
+        onChange={(e)=>{setDataReserva(e.target.value)}}
+        required
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+            </InputAdornment>
+          ),
+        }}
+      />
+      <TextField
+        className={classes.margin}
+        id="Inicio"
+        label="Inicio"
+        type="time"
+        value={dataInicio}
+        onChange={(e)=>{setDataInicio(e.target.value)}}
+        required
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+            </InputAdornment>
+          ),
+        }}
+      />
+         <TextField
+        className={classes.margin}
+        id="Encerramento"
+        label="Encerramento"
+        type="time"
+        value={dataEncerramento}
+        onChange={(e)=>{setDataEncerramento(e.target.value)}}
+        required
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+            </InputAdornment>
+          ),
+        }}
+      />
         </div>
+  
+           <Button variant="contained" type="submit" color="primary">Solicitar</Button>
+     
+      
+    </div>
+      </form>
       </Drawer>
+
     </>
   );
 }
